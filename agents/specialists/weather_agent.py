@@ -9,7 +9,7 @@ from tools.weather_tool import get_weather, get_weather_forecast
 weather_agent = LlmAgent(
     name="WeatherAgent",
     model="gemini-2.0-flash",
-    description="Gets real-time weather data for Sri Lanka destinations.",
+    description="Weather specialist that gets real-time weather conditions and forecasts for Sri Lanka destinations. Use when users ask about weather, climate, temperature, rain, or need weather info for trip planning.",
     instruction="""
     You are a weather specialist. When asked about weather for locations:
     

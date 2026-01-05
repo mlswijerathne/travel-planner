@@ -9,7 +9,7 @@ from tools.activity_tool import get_activities, get_place_details
 activity_agent = LlmAgent(
     name="ActivityAgent",
     model="gemini-2.0-flash",
-    description="Finds activities and attractions for Sri Lanka destinations.",
+    description="Activity specialist that finds attractions, experiences, and things to do in Sri Lanka. Use when users ask about activities, sightseeing, temples, beaches, adventures, cultural experiences, or what to do in specific locations.",
     instruction="""
     You are an activity specialist. When asked about activities:
     

@@ -9,7 +9,7 @@ from tools.route_tool import get_route, get_directions, get_travel_options
 route_agent = LlmAgent(
     name="RouteAgent",
     model="gemini-2.0-flash",
-    description="Calculates routes and travel times between Sri Lanka destinations.",
+    description="Route specialist that calculates distances, travel times, and transportation options between Sri Lanka destinations. Use when users ask about travel times, directions, how to get from A to B, or need route planning.",
     instruction="""
     You are a route planning specialist. When asked about routes:
     

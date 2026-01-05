@@ -9,7 +9,7 @@ from tools.budget_tool import check_budget, get_currency_rate, compare_costs
 budget_agent = LlmAgent(
     name="BudgetAgent",
     model="gemini-2.0-flash",
-    description="Estimates costs and budget for Sri Lanka travel.",
+    description="Budget specialist that estimates costs, currency rates, and provides budget breakdowns for Sri Lanka travel. Use when users ask about costs, prices, budget, expenses, or need financial planning for their trip.",
     instruction="""
     You are a budget specialist. When asked about costs:
     

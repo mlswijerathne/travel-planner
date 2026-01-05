@@ -9,7 +9,7 @@ from tools.safety_tool import get_safety_info, get_travel_advisory
 safety_agent = LlmAgent(
     name="SafetyAgent",
     model="gemini-2.0-flash",
-    description="Gets safety information for Sri Lanka travel.",
+    description="Safety specialist that provides travel advisories, safety tips, health warnings, and emergency contacts for Sri Lanka. Use when users ask about safety, security, health risks, or need safety info for specific locations.",
     instruction="""
     You are a safety specialist. When asked about safety for locations:
     

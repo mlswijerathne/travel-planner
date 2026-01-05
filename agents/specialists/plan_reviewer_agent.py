@@ -8,7 +8,7 @@ from google.adk.agents import LlmAgent
 plan_reviewer_agent = LlmAgent(
     name="PlanReviewerAgent",
     model="gemini-2.0-flash",
-    description="Synthesizes specialist data into ONE comprehensive plan. No redundant outputs.",
+    description="Plan synthesis specialist that combines data from all specialists into a comprehensive, polished travel itinerary. Use after gathering weather, safety, activities, routes, and budget data to create the final plan.",
     instruction="""
     You are the SILENT plan synthesizer for Sri Lanka travel planning.
     

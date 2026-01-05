@@ -1,18 +1,25 @@
-"""
+""""
 Sri Lanka Travel Agent - Multi-Agent Orchestrator
-Uses Google ADK Multi-Agent System with Human-in-the-Loop Pattern
+Coordinator Pattern with LLM-Driven Transfer (sub_agents)
 
 This orchestrator provides:
-1. Full planning workflow with human approval
-2. Approval management for human-in-the-loop pattern
+1. TravelCoordinator with LLM-driven transfer_to_agent() routing
+2. Specialist sub-agents for domain-specific tasks
+3. Optional human-in-the-loop approval workflow
+4. Session management for multi-turn conversations
+
+Architecture: Single Coordinator with Sub-Agents - LLM-driven delegation
 """
 import os
 from dotenv import load_dotenv
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 
-# Import the main agent
-from agents.workflow import root_agent
+# Import the main coordinator agent
+from agents.workflow import (
+    root_agent,              # TravelCoordinator - main agent with sub_agents
+    travel_coordinator       # Same as root_agent
+)
 
 # Import approval management
 from tools.human_approval_tool import (
@@ -50,9 +57,9 @@ def get_or_create_session(user_id: str = "default_user"):
 # RUNNER FOR WORKFLOW
 # =============================================================================
 
-# Main planning agent runner
+# Main coordinator agent runner (handles all query types via LLM delegation)
 planning_runner = Runner(
-    agent=root_agent,
+    agent=root_agent,  # TravelCoordinator - handles dynamic transfer_to_agent() routing
     app_name="sri_lanka_travel_agent",
     session_service=session_service
 )
@@ -62,7 +69,11 @@ planning_runner = Runner(
 # MAIN PROCESSING FUNCTIONS
 # =============================================================================
 
-def process_request(user_input: str, user_id: str = "default_user", require_approval: bool = True) -> dict:
+def process_request(
+    user_input: str, 
+    user_id: str = "default_user", 
+    require_approval: bool = True
+) -> dict:
     """
     Process a travel planning request through the multi-agent system.
     
@@ -77,7 +88,7 @@ def process_request(user_input: str, user_id: str = "default_user", require_appr
     session = get_or_create_session(user_id)
     
     try:
-        # Use the main planning workflow
+        # Use the coordinator with LLM-driven delegation
         response = planning_runner.run(
             user_id=user_id,
             session_id=session.id,
@@ -220,6 +231,9 @@ def simple_process(user_input: str) -> str:
     """
     Simple interface for backward compatibility.
     Returns just the response text.
+    
+    Args:
+        user_input: The user's query
     """
     result = process_request(user_input, require_approval=False)
     if result["status"] == "success":
@@ -232,3 +246,28 @@ def simple_process(user_input: str) -> str:
 def process_request_legacy(user_input: str) -> str:
     """Legacy function for backward compatibility."""
     return simple_process(user_input)
+
+
+# =============================================================================
+# EXPORTS
+# =============================================================================
+__all__ = [
+    # Main processing functions
+    'process_request',
+    'process_approval',
+    'simple_process',
+    
+    # Session management
+    'get_or_create_session',
+    'get_session_state',
+    'clear_session',
+    
+    # Approval management
+    'get_pending_approvals',
+    
+    # Runners
+    'planning_runner',
+    
+    # Legacy
+    'process_request_legacy'
+]
