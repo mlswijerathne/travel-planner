@@ -1,0 +1,16 @@
+# Core dependencies
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+
+# Google ADK - Agent Development Kit
+google-adk>=0.1.0
+
+# API clients
+requests
+googlemaps
+
+# Async support (optional, for better performance)
+aiohttp
+httpx
